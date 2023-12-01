@@ -20,16 +20,15 @@ jobs:
         id: cache-snapshot
         uses: actions/cache@v3
         with:
-          path: "${{ env.RUNNER_TEMP }}/${{ env.SNAPSHOT }}-osx.pkg"
+          path: "${{ env.SNAPSHOT }}-osx.pkg"
           key: ${{ runner.os }}-swift-${{ env.SNAPSHOT }}
       - name: Download nightly
         if: steps.cache-snapshot.outputs.cache-hit != 'true'
         run: |
-          cd $RUNNER_TEMP
           curl -O "https://download.swift.org/development/xcode/$SNAPSHOT/$SNAPSHOT-osx.pkg"
       - name: Install nightly
         run: |
-          sudo installer -pkg "$RUNNER_TEMP/$SNAPSHOT-osx.pkg" -target /
+          sudo installer -pkg "$SNAPSHOT-osx.pkg" -target /
           export TOOLCHAINS=swift
           echo "TOOLCHAINS=$TOOLCHAINS" >> "$GITHUB_ENV"
       - name: Restore Swift Package Manager cache
