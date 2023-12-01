@@ -48,9 +48,8 @@
     {
       "identity" : "swift-testing",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-testing.git",
+      "location" : "https://github.com/apple/swift-testing",
       "state" : {
-        "branch" : "main",
         "revision" : "0b5c648b5329bac107064950fa1b19858d581103"
       }
     }
