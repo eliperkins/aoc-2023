@@ -45,7 +45,7 @@ jobs:
             ${{ runner.os }}-spm2-
 
       - name: Run tests
-        run: swift test --enable-experimental-swift-testing
+        run: swift test --disable-xctest --enable-experimental-swift-testing --parallel
 
   ubuntu:
     name: Ubuntu
@@ -63,4 +63,4 @@ jobs:
             ${{ runner.os }}-spm2-
 
       - name: Run tests
-        run: swift test --disable-xctest --enable-experimental-swift-testing
+        run: swift test --disable-xctest --enable-experimental-swift-testing --parallel
