@@ -45,7 +45,7 @@ jobs:
             ${{ runner.os }}-spm2-
 
       - name: Run tests
-        run: swift test --disable-xctest --enable-experimental-swift-testing --parallel
+        run: swift test --disable-xctest --enable-experimental-swift-testing --parallel 2>&1 | xcbeautify
 
   ubuntu:
     name: Ubuntu
@@ -53,6 +53,11 @@ jobs:
     container: swiftlang/swift:nightly-jammy
     steps:
       - uses: actions/checkout@v4
+
+      - name: Download xcbeautify
+        run: |
+          curl -O https://github.com/tuist/xcbeautify/releases/download/1.0.1/xcbeautify-1.0.1-x86_64-unknown-linux-gnu.tar.xz
+          tar -xf xcbeautify-1.0.1-x86_64-unknown-linux-gnu.tar.xz
 
       - name: Restore Swift Package Manager cache
         uses: actions/cache@v3
@@ -63,4 +68,4 @@ jobs:
             ${{ runner.os }}-spm2-
 
       - name: Run tests
-        run: swift test --disable-xctest --enable-experimental-swift-testing --parallel
+        run: swift test --disable-xctest --enable-experimental-swift-testing --parallel 2>&1 | ./xcbeautify
