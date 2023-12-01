@@ -7,6 +7,8 @@ disabled_rules:
   - nesting
   - trailing_comma
 identifier_name:
+  allowed_symbols:
+    - _
   excluded:
     - x
     - y
@@ -26,3 +28,4 @@ identifier_name:
     - cd
     - ls
     - f
+    - to

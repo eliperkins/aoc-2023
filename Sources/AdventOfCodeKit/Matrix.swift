@@ -1,4 +1,3 @@
-// swiftlint:disable identifier_name
 public struct Matrix<T>: CustomDebugStringConvertible {
     private(set) var _rows: [[T]]
     private(set) var _columns: [[T]]

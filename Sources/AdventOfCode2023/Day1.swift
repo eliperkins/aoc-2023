@@ -69,10 +69,8 @@ public struct Day1 {
             }
 
             let substring = line[line.startIndex...index]
-            for (key, value) in replacements {
-                if substring.hasSuffix(key) {
-                    return value
-                }
+            for (key, value) in replacements where substring.hasSuffix(key) {
+                return value
             }
         }
         throw Error.missingNumberInString

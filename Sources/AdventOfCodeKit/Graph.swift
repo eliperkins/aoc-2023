@@ -62,6 +62,7 @@ public struct Graph<T> where T: Identifiable, T: Hashable {
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
     public func floydWarshall() -> Set<PathResult> {
         var dist = Matrix(repeating: Int.max, width: storage.keys.count, height: storage.keys.count)
         var next = Matrix(repeating: Int.max, width: storage.keys.count, height: storage.keys.count)
@@ -70,6 +71,7 @@ public struct Graph<T> where T: Identifiable, T: Hashable {
         let keyLookup = Dictionary(uniqueKeysWithValues: stableValues)
         let indexLookup = Dictionary(uniqueKeysWithValues: stableValues.map { ($1, $0) })
 
+        // swiftlint:disable identifier_name
         for (i, neighbors) in map {
             for j in neighbors {
                 if let x = indexLookup[i], let y = indexLookup[j] {
@@ -81,6 +83,7 @@ public struct Graph<T> where T: Identifiable, T: Hashable {
             }
         }
 
+        // swiftlint:disable:next unused_enumerated
         for (index, _) in storage.keys.enumerated() {
             dist.set(value: 0, x: index, y: index)
             next.set(value: index, x: index, y: index)
@@ -91,7 +94,7 @@ public struct Graph<T> where T: Identifiable, T: Hashable {
                 for j in keyLookup.keys.sorted() {
                     if let edgeA = dist.atPosition(x: i, y: j),
                         let edgeB = dist.atPosition(x: i, y: k),
-                        let edgeC = dist.atPosition(x: k, y: j)
+                        let edgeC = dist.atPosition(x: k, y: j)  // swiftlint:disable:this opening_brace
                     {
                         if edgeB == .max || edgeC == .max {
                             continue
@@ -135,6 +138,7 @@ public struct Graph<T> where T: Identifiable, T: Hashable {
                 )
             }
         }
+        // swiftlint:enable identifier_name
 
         return Set(acc)
     }
