@@ -18,17 +18,10 @@ jobs:
       - name: Select Xcode version
         run: sudo xcode-select -s /Applications/Xcode_15.0.1.app
 
-      - name: Restore Swift development snapshot cache
-        id: cache-snapshot
-        uses: actions/cache@v3
-        with:
-          path: "${{ env.SNAPSHOT }}-osx.pkg"
-          key: ${{ runner.os }}-swift-${{ env.SNAPSHOT }}
-
       - name: Download nightly
-        if: steps.cache-snapshot.outputs.cache-hit != 'true'
         run: |
-          curl -O "https://download.swift.org/development/xcode/$SNAPSHOT/$SNAPSHOT-osx.pkg"
+          brew install aria2
+          aria2c -x 16 -s 16 "https://download.swift.org/development/xcode/$SNAPSHOT/$SNAPSHOT-osx.pkg"
 
       - name: Install nightly
         run: |
