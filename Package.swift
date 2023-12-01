@@ -19,8 +19,11 @@ var targets: [Target] = [
             .copy("Inputs")
         ],
         swiftSettings:[
-            .unsafeFlags(["-O"])
-        ],
+            .unsafeFlags([
+                "-O",
+                "-cross-module-optimization"
+            ])
+        ]
     ),
     .target(
         name: "AdventOfCodeKit",
