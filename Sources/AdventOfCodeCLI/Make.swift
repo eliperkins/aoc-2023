@@ -42,23 +42,23 @@ struct Make: AsyncParsableCommand {
     private func testFile(_ day: Int) -> String {
         """
         import AdventOfCode\(options.year)
-        import XCTest
+        import Testing
 
-        final class Day\(options.day)Tests: XCTestCase {
-            func test_part1_test() throws {
-                XCTAssertEqual(try Day\(options.day)(input: Day\(options.day).sample).solvePart1(), 1)
+        @Suite("Day \(options.day)") struct Day\(options.day)Tests {
+            @Test func part1_test() throws {
+                #expect(try Day\(options.day)(input: Day\(options.day).sample).solvePart1() == 1)
             }
 
-            func test_part1_solution() throws {
-                XCTAssertEqual(try Day\(options.day)().solvePart1(), 1)
+            @Test func part1_solution() throws {
+                #expect(try Day\(options.day)().solvePart1() == 1)
             }
 
-            func test_part2_test() throws {
-                XCTAssertEqual(try Day\(options.day)(input: Day\(options.day).sample).solvePart2(), 1)
+            @Test func part2_test() throws {
+                #expect(try Day\(options.day)(input: Day\(options.day).sample).solvePart2() == 1)
             }
 
-            func test_part2_solution() throws {
-                XCTAssertEqual(try Day\(options.day)().solvePart2(), 1)
+            @Test func part2_solution() throws {
+                #expect(try Day\(options.day)().solvePart2() == 1)
             }
         }
         """
