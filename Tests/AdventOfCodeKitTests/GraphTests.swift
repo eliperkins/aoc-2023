@@ -1,7 +1,7 @@
 import AdventOfCodeKit
-import XCTest
+import Testing
 
-final class GraphTests: XCTestCase {
+struct GraphTests {
     /*
       A — B
          / \
@@ -20,15 +20,14 @@ final class GraphTests: XCTestCase {
         ]
     )
 
-    func test_bfs() throws {
+    @Test func bfs() throws {
         let path = graph.breadthFirstSearch(from: "A", to: "C")
-        XCTAssertEqual(path, ["A", "B", "C"])
+        #expect(path == ["A", "B", "C"])
     }
 
-    func test_bfs_traversal() throws {
-        XCTAssertEqual(
-            Array(graph.breadthFirstTraversal(from: "A")),
-            [
+    @Test func bfs_traversal() throws {
+        #expect(
+            Array(graph.breadthFirstTraversal(from: "A")) == [
                 ["A"],
                 ["A", "B"],
                 ["A", "B", "C"],
@@ -38,7 +37,7 @@ final class GraphTests: XCTestCase {
         )
     }
 
-    func test_floydWarshall() throws {
+    @Test func floydWarshall() throws {
         let aPaths = graph.floydWarshall().filter { $0.source == "A" }
             .sorted(by: { $0.destination < $1.destination })
         let possiblePaths = Set([
@@ -48,11 +47,10 @@ final class GraphTests: XCTestCase {
             Graph.PathResult(source: "A", destination: "E", path: ["A", "B", "D", "E"]),
             Graph.PathResult(source: "A", destination: "E", path: ["A", "B", "C", "E"]),
         ])
-        XCTAssertTrue(possiblePaths.subtracting(aPaths).count == 1)
+        #expect(possiblePaths.subtracting(aPaths).count == 1)
     }
-
 }
 
-extension String: Identifiable {
+extension String: @retroactive Identifiable {
     public var id: String { self }
 }
