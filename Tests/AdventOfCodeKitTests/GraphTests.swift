@@ -27,8 +27,7 @@ struct GraphTests {
 
     @Test func bfs_traversal() throws {
         #expect(
-            Array(graph.breadthFirstTraversal(from: "A")) == 
-            [
+            Array(graph.breadthFirstTraversal(from: "A")) == [
                 ["A"],
                 ["A", "B"],
                 ["A", "B", "C"],
@@ -50,7 +49,6 @@ struct GraphTests {
         ])
         #expect(possiblePaths.subtracting(aPaths).count == 1)
     }
-
 }
 
 extension String: @retroactive Identifiable {
