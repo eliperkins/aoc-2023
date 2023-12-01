@@ -31,12 +31,9 @@ jobs:
   ubuntu:
     name: Ubuntu
     runs-on: ubuntu-latest
-    container: swift:5.9
+    container: swift:nightly-jammy
     steps:
       - uses: actions/checkout@v4
-      - uses: SwiftyLab/setup-swift@latest
-        with:
-          development: true
       - name: Restore Swift Package Manager cache
         uses: actions/cache@v3
         with:
