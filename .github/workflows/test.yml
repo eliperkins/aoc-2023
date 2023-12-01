@@ -31,7 +31,7 @@ jobs:
   ubuntu:
     name: Ubuntu
     runs-on: ubuntu-latest
-    container: swift:nightly-jammy
+    container: swiftlang/swift:nightly-jammy
     steps:
       - uses: actions/checkout@v4
       - name: Restore Swift Package Manager cache
