@@ -89,12 +89,13 @@ public struct Graph<T> where T: Identifiable, T: Hashable {
             next.set(value: index, x: index, y: index)
         }
 
+        // swiftlint:disable opening_brace
         for k in keyLookup.keys.sorted() {
             for i in keyLookup.keys.sorted() {
                 for j in keyLookup.keys.sorted() {
                     if let edgeA = dist.atPosition(x: i, y: j),
                         let edgeB = dist.atPosition(x: i, y: k),
-                        let edgeC = dist.atPosition(x: k, y: j)  // swiftlint:disable:this opening_brace
+                        let edgeC = dist.atPosition(x: k, y: j)
                     {
                         if edgeB == .max || edgeC == .max {
                             continue
@@ -108,6 +109,7 @@ public struct Graph<T> where T: Identifiable, T: Hashable {
                 }
             }
         }
+        // swiftlint:enable opening_brace
 
         var acc = [PathResult]()
         for u in keyLookup.keys.sorted() {
