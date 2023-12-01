@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 
 import PackageDescription
 
@@ -17,7 +17,10 @@ var targets: [Target] = [
         ],
         resources: [
             .copy("Inputs")
-        ]
+        ],
+        swiftSettings:[
+            .unsafeFlags(["-O"])
+        ],
     ),
     .target(
         name: "AdventOfCodeKit",
