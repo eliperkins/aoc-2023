@@ -23,6 +23,7 @@ jobs:
           path: "${{ env.RUNNER_TEMP }}/${{ env.SNAPSHOT }}-osx.pkg"
           key: ${{ runner.os }}-swift-${{ env.SNAPSHOT }}
       - name: Download nightly
+        if: steps.cache-snapshot.outputs.cache-hit != 'true'
         run: |
           cd $RUNNER_TEMP
           curl -O "https://download.swift.org/development/xcode/$SNAPSHOT/$SNAPSHOT-osx.pkg"
