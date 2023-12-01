@@ -39,10 +39,8 @@ jobs:
           key: ${{ runner.os }}-spm2-${{ hashFiles('Package.resolved') }}
           restore-keys: |
             ${{ runner.os }}-spm2-
-      - name: Build
-        run: swift build --build-tests
       - name: Run tests
-        run: swift test --skip-build --enable-experimental-swift-testing
+        run: swift test --enable-experimental-swift-testing
   ubuntu:
     name: Ubuntu
     runs-on: ubuntu-latest
@@ -58,7 +56,5 @@ jobs:
             ${{ runner.os }}-spm2-
       - name: Print Swift version
         run: swift --version
-      - name: Build
-        run: swift build --build-tests --static-swift-stdlib
       - name: Run tests
         run: swift test --enable-experimental-swift-testing
