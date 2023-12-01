@@ -28,17 +28,18 @@ var targets: [Target] = [
     ),
     .testTarget(
         name: "AdventOfCode2023Tests",
-        dependencies: ["AdventOfCode2023"]
+        dependencies: ["AdventOfCode2023", .product(name: "Testing", package: "swift-testing")]
     ),
     .testTarget(
         name: "AdventOfCodeKitTests",
-        dependencies: ["AdventOfCodeKit"]
+        dependencies: ["AdventOfCodeKit", .product(name: "Testing", package: "swift-testing")]
     ),
 ]
 var dependencies: [Package.Dependency] = [
     .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
     .package(url: "https://github.com/apple/swift-collections", from: "1.0.5"),
     .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
+    .package(url: "https://github.com/apple/swift-testing", revision: "0b5c648b5329bac107064950fa1b19858d581103"),
 ]
 #if os(macOS)
     products.append(.executable(name: "aoc-cli", targets: ["AdventOfCodeCLI"]))

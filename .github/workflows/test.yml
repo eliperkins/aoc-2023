@@ -14,31 +14,37 @@ jobs:
       - uses: actions/checkout@v4
       - name: Select Xcode version
         run: sudo xcode-select -s /Applications/Xcode_15.0.1.app
+      - uses: SwiftyLab/setup-swift@latest
+        with:
+          development: true
       - name: Restore Swift Package Manager cache
         uses: actions/cache@v3
         with:
           path: .build
-          key: ${{ runner.os }}-spm-${{ hashFiles('Package.resolved') }}
+          key: ${{ runner.os }}-spm2-${{ hashFiles('Package.resolved') }}
           restore-keys: |
-            ${{ runner.os }}-spm-
+            ${{ runner.os }}-spm2-
       - name: Build
         run: swift build -c release --build-tests
       - name: Run tests
-        run: swift test -c release --skip-build
+        run: swift test -c release --skip-build --enable-experimental-swift-testing
   ubuntu:
     name: Ubuntu
     runs-on: ubuntu-latest
     container: swift:5.9
     steps:
       - uses: actions/checkout@v4
+      - uses: SwiftyLab/setup-swift@latest
+        with:
+          development: true
       - name: Restore Swift Package Manager cache
         uses: actions/cache@v3
         with:
           path: .build
-          key: ${{ runner.os }}-spm-${{ hashFiles('Package.resolved') }}
+          key: ${{ runner.os }}-spm2-${{ hashFiles('Package.resolved') }}
           restore-keys: |
-            ${{ runner.os }}-spm-
+            ${{ runner.os }}-spm2-
       - name: Build
         run: swift build -c release --build-tests
       - name: Run tests
-        run: swift test -c release --skip-build
+        run: swift test -c release --skip-build --enable-experimental-swift-testing
