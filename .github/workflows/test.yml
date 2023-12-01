@@ -41,7 +41,7 @@ jobs:
       - name: Build
         run: swift build -c release --build-tests
       - name: Run tests
-        run: swift test -c release --skip-build --enable-experimental-swift-testing
+        run: swift test --skip-build --enable-experimental-swift-testing
   ubuntu:
     name: Ubuntu
     runs-on: ubuntu-latest
@@ -58,4 +58,4 @@ jobs:
       - name: Build
         run: swift build -c release --build-tests --static-swift-stdlib
       - name: Run tests
-        run: swift test -c release --skip-build --enable-experimental-swift-testing
+        run: swift test --skip-build --enable-experimental-swift-testing
