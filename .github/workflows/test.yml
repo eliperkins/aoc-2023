@@ -14,23 +14,28 @@ jobs:
       SNAPSHOT: swift-DEVELOPMENT-SNAPSHOT-2023-11-27-a
     steps:
       - uses: actions/checkout@v4
+
       - name: Select Xcode version
         run: sudo xcode-select -s /Applications/Xcode_15.0.1.app
+
       - name: Restore Swift development snapshot cache
         id: cache-snapshot
         uses: actions/cache@v3
         with:
           path: "${{ env.SNAPSHOT }}-osx.pkg"
           key: ${{ runner.os }}-swift-${{ env.SNAPSHOT }}
+
       - name: Download nightly
         if: steps.cache-snapshot.outputs.cache-hit != 'true'
         run: |
           curl -O "https://download.swift.org/development/xcode/$SNAPSHOT/$SNAPSHOT-osx.pkg"
+
       - name: Install nightly
         run: |
           sudo installer -pkg "$SNAPSHOT-osx.pkg" -target /
           export TOOLCHAINS=swift
           echo "TOOLCHAINS=$TOOLCHAINS" >> "$GITHUB_ENV"
+
       - name: Restore Swift Package Manager cache
         uses: actions/cache@v3
         with:
@@ -38,6 +43,7 @@ jobs:
           key: ${{ runner.os }}-spm2-${{ hashFiles('Package.resolved') }}
           restore-keys: |
             ${{ runner.os }}-spm2-
+
       - name: Run tests
         run: swift test --enable-experimental-swift-testing
   ubuntu:
@@ -46,6 +52,7 @@ jobs:
     container: swiftlang/swift:nightly-jammy
     steps:
       - uses: actions/checkout@v4
+
       - name: Restore Swift Package Manager cache
         uses: actions/cache@v3
         with:
@@ -53,5 +60,6 @@ jobs:
           key: ${{ runner.os }}-spm2-${{ hashFiles('Package.resolved') }}
           restore-keys: |
             ${{ runner.os }}-spm2-
+
       - name: Run tests
         run: swift test --disable-xctest --enable-experimental-swift-testing
