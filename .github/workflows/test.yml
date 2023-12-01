@@ -56,7 +56,7 @@ jobs:
 
       - name: Download xcbeautify
         run: |
-          curl -O https://github.com/tuist/xcbeautify/releases/download/1.0.1/xcbeautify-1.0.1-x86_64-unknown-linux-gnu.tar.xz
+          wget -O xcbeautify-1.0.1-x86_64-unknown-linux-gnu.tar.xz https://github.com/tuist/xcbeautify/releases/download/1.0.1/xcbeautify-1.0.1-x86_64-unknown-linux-gnu.tar.xz
           tar -xf xcbeautify-1.0.1-x86_64-unknown-linux-gnu.tar.xz
 
       - name: Restore Swift Package Manager cache
