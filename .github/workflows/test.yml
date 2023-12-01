@@ -28,7 +28,7 @@ jobs:
           curl -O "https://download.swift.org/development/xcode/$SNAPSHOT/$SNAPSHOT-osx.pkg"
       - name: Install nightly
         run: |
-          sudo installer -pkg "$SNAPSHOT-osx.pkg" -target /
+          sudo installer -pkg "$RUNNER_TEMP/$SNAPSHOT-osx.pkg" -target /
           export TOOLCHAINS=swift
           echo "TOOLCHAINS=$TOOLCHAINS" >> "$GITHUB_ENV"
       - name: Restore Swift Package Manager cache
