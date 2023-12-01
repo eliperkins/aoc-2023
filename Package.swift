@@ -13,7 +13,6 @@ var targets: [Target] = [
             .product(name: "Algorithms", package: "swift-algorithms"),
             .product(name: "Collections", package: "swift-collections"),
             .product(name: "Numerics", package: "swift-numerics"),
-            .product(name: "Parsing", package: "swift-parsing"),
             .target(name: "AdventOfCodeKit"),
         ],
         resources: [
@@ -40,7 +39,6 @@ var dependencies: [Package.Dependency] = [
     .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
     .package(url: "https://github.com/apple/swift-collections", from: "1.0.5"),
     .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
-    .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.13.0"),
 ]
 #if os(macOS)
     products.append(.executable(name: "aoc-cli", targets: ["AdventOfCodeCLI"]))
