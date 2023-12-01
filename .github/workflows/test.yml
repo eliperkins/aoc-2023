@@ -45,6 +45,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spm2-
       - name: Build
-        run: swift build -c release --build-tests
+        run: swift build -c release --build-tests --static-swift-stdlib
       - name: Run tests
         run: swift test -c release --skip-build --enable-experimental-swift-testing
