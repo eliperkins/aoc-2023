@@ -46,19 +46,23 @@ struct Make: AsyncParsableCommand {
 
         @Suite("Day \(options.day)") struct Day\(options.day)Tests {
             @Test func part1_test() throws {
-                #expect(try Day\(options.day)(input: Day\(options.day).sample).solvePart1() == 1)
+                let result = try Day\(options.day)(input: Day\(options.day).sample).solvePart1()
+                #expect(result == 1)
             }
 
             @Test func part1_solution() throws {
-                #expect(try Day\(options.day)().solvePart1() == 1)
+                let result = try Day\(options.day)().solvePart1()
+                #expect(result == 1)
             }
 
             @Test func part2_test() throws {
-                #expect(try Day\(options.day)(input: Day\(options.day).sample).solvePart2() == 1)
+                let result = try Day\(options.day)(input: Day\(options.day).sample).solvePart2()
+                #expect(result == 1)
             }
 
             @Test func part2_solution() throws {
-                #expect(try Day\(options.day)().solvePart2() == 1)
+                let result = try Day\(options.day)().solvePart2() 
+                #expect(result == 1)
             }
         }
         """
