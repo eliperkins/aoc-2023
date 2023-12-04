@@ -19,6 +19,6 @@ import Testing
 
     @Test func part2_solution() throws {
         let result = try Day3().solvePart2()
-        #expect(result == 1)
+        #expect(result == 82_301_120)
     }
 }

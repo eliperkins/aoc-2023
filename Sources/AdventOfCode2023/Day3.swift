@@ -33,6 +33,11 @@ public struct Day3 {
         let end: Point
     }
 
+    struct Symbol: Hashable {
+        let point: Point
+        let value: String
+    }
+
     final class ParsingState {
         var start: Point
         var end: Point
@@ -45,53 +50,7 @@ public struct Day3 {
         var touchedSymbols = [Point: String]()
     }
 
-    public func solvePart1() throws -> Int {
-        let matrix = Matrix(input.lines.map { $0.unicodeScalars.map { String($0) } })
-        var numbers = [NumberPosition: (Int, Bool)]()
-        var state: ParsingState?
-        matrix.forEachPoint { value, point in
-            func finalizeState() {
-                if let stateToAdd = state {
-                    let position = NumberPosition(start: stateToAdd.start, end: stateToAdd.end)
-                    numbers[position] = (stateToAdd.value, !stateToAdd.touchedSymbols.isEmpty)
-                    state = nil
-                }
-            }
-
-            if let digit = Int(value) {
-                if let state, state.start.y == point.y {
-                    state.value *= 10
-                    state.value += digit
-                    state.end = point
-                } else {
-                    finalizeState()
-                    state = ParsingState(start: point, end: point, value: digit)
-                }
-
-                for point in point.adjacent {
-                    if let symbol = matrix.at(point: point) {
-                        if Int(symbol) == nil && symbol != "." {
-                            state?.touchedSymbols[point] = symbol
-                        }
-                    }
-                }
-            } else {
-                finalizeState()
-            }
-        }
-
-        return numbers.values
-            .filter(\.1)
-            .map(\.0)
-            .sum()
-    }
-
-    public func solvePart2() throws -> Int {
-        struct Symbol: Hashable {
-            let point: Point
-            let value: String
-        }
-        let matrix = Matrix(input.lines.map { $0.unicodeScalars.map { String($0) } })
+    func parsePositions(in matrix: Matrix<String>) -> [NumberPosition: (Int, Set<Symbol>)] {
         var numbers = [NumberPosition: (Int, Set<Symbol>)]()
         var state: ParsingState?
         matrix.forEachPoint { value, point in
@@ -128,6 +87,21 @@ public struct Day3 {
                 finalizeState()
             }
         }
+        return numbers
+    }
+
+    public func solvePart1() throws -> Int {
+        let matrix = Matrix(input.lines.map { $0.unicodeScalars.map { String($0) } })
+        let numbers = parsePositions(in: matrix)
+        return numbers.values
+            .filter { !$0.1.isEmpty }
+            .map(\.0)
+            .sum()
+    }
+
+    public func solvePart2() throws -> Int {
+        let matrix = Matrix(input.lines.map { $0.unicodeScalars.map { String($0) } })
+        let numbers = parsePositions(in: matrix)
 
         var sum = 0
         var computedIntersections = Set<Point>()
