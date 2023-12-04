@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 5.9
 
 import PackageDescription
 
@@ -18,10 +18,10 @@ var targets: [Target] = [
         resources: [
             .copy("Inputs")
         ],
-        swiftSettings:[
+        swiftSettings: [
             .unsafeFlags([
                 "-O",
-                "-cross-module-optimization"
+                "-cross-module-optimization",
             ])
         ]
     ),
