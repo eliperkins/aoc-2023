@@ -61,7 +61,7 @@ struct Make: AsyncParsableCommand {
             }
 
             @Test func part2_solution() throws {
-                let result = try Day\(options.day)().solvePart2() 
+                let result = try Day\(options.day)().solvePart2()
                 #expect(result == 1)
             }
         }
