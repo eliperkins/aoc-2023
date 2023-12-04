@@ -50,36 +50,27 @@ public struct Day4 {
         }
     }
 
+    func parseCard(from line: String) -> Card? {
+        if let gameInput = line.split(separator: ": ").last {
+            let numbers = gameInput.split(separator: " | ")
+            if let first = numbers.first, let last = numbers.last {
+                let winningNumbers = Set(first.split(separator: " ").map(String.init).compactMap(Int.init))
+                let myNumbers = Set(last.split(separator: " ").map(String.init).compactMap(Int.init))
+                return Card(winningNumbers: winningNumbers, myNumbers: myNumbers)
+            }
+        }
+        return nil
+    }
+
     public func solvePart1() throws -> Int {
         input.lines
-            .compactMap {
-                if let gameInput = $0.split(separator: ": ").last {
-                    let numbers = gameInput.split(separator: " | ")
-                    if let first = numbers.first, let last = numbers.last {
-                        let winningNumbers = Set(first.split(separator: " ").map(String.init).compactMap(Int.init))
-                        let myNumbers = Set(last.split(separator: " ").map(String.init).compactMap(Int.init))
-                        return Card(winningNumbers: winningNumbers, myNumbers: myNumbers)
-                    }
-                }
-                return nil
-            }
+            .compactMap(parseCard(from:))
             .map(\.score)
             .sum()
     }
 
     public func solvePart2() throws -> Int {
-        let cards = input.lines
-            .compactMap {
-                if let gameInput = $0.split(separator: ": ").last {
-                    let numbers = gameInput.split(separator: " | ")
-                    if let first = numbers.first, let last = numbers.last {
-                        let winningNumbers = Set(first.split(separator: " ").map(String.init).compactMap(Int.init))
-                        let myNumbers = Set(last.split(separator: " ").map(String.init).compactMap(Int.init))
-                        return Card(winningNumbers: winningNumbers, myNumbers: myNumbers)
-                    }
-                }
-                return nil
-            }
+        let cards = input.lines.compactMap(parseCard(from:))
 
         var cardCounts = [Int: Int](
             uniqueKeysWithValues:
