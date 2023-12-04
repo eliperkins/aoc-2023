@@ -39,6 +39,10 @@ public struct Matrix<T>: CustomDebugStringConvertible {
         return nil
     }
 
+    public func at(point: Point) -> T? {
+        atPosition(x: point.x, y: point.y)
+    }
+
     public mutating func set(value: T, x: Int, y: Int) {
         if rows.indices.contains(y) {
             let row = rows[y]
@@ -49,10 +53,22 @@ public struct Matrix<T>: CustomDebugStringConvertible {
         }
     }
 
+    public mutating func set(value: T, point: Point) {
+        set(value: value, x: point.x, y: point.y)
+    }
+
     public func forEachPosition(_ fn: (T, (x: Int, y: Int)) -> Void) {
         rows.enumerated().forEach { (rowIndex, row) in
             row.enumerated().forEach { (columnIndex, item) in
                 fn(item, (x: columnIndex, y: rowIndex))
+            }
+        }
+    }
+
+    public func forEachPoint(_ fn: (T, Point) -> Void) {
+        rows.enumerated().forEach { (rowIndex, row) in
+            row.enumerated().forEach { (columnIndex, item) in
+                fn(item, Point(x: columnIndex, y: rowIndex))
             }
         }
     }
