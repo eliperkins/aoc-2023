@@ -44,6 +44,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spm2-
 
+      - name: Download inputs
+        run: ./Scripts/download.sh
+
       - name: Run tests
         run: swift test --disable-xctest --enable-experimental-swift-testing --parallel
 
@@ -61,6 +64,9 @@ jobs:
           key: ${{ runner.os }}-spm2-${{ hashFiles('Package.resolved') }}
           restore-keys: |
             ${{ runner.os }}-spm2-
+
+      - name: Download inputs
+        run: ./Scripts/download.sh
 
       - name: Run tests
         run: swift test --disable-xctest --enable-experimental-swift-testing --parallel
