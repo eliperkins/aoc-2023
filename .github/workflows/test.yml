@@ -12,6 +12,7 @@ jobs:
     runs-on: macos-13
     env:
       SNAPSHOT: swift-DEVELOPMENT-SNAPSHOT-2023-11-27-a
+      AOC_SESSION: ${{ secrets.AOC_SESSION }}
     steps:
       - uses: actions/checkout@v4
 
@@ -54,6 +55,8 @@ jobs:
     name: Ubuntu
     runs-on: ubuntu-latest
     container: swiftlang/swift:nightly-jammy
+    env:
+      AOC_SESSION: ${{ secrets.AOC_SESSION }}
     steps:
       - uses: actions/checkout@v4
 
