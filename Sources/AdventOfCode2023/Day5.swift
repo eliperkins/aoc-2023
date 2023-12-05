@@ -86,9 +86,8 @@ public struct Day5 {
                 for (destination, source, length) in group {
                     let sourceSet = IndexSet(integersIn: source..<(source + length))
                     for sourceRange in sourceSet.intersection(current).rangeView {
-                        let offset = source + destination
-                        let start = sourceRange.lowerBound - offset
-                        let end = sourceRange.upperBound - offset
+                        let start = sourceRange.lowerBound - source + destination
+                        let end = sourceRange.upperBound - source + destination
                         let destinationRange = start..<end
                         next.insert(integersIn: destinationRange)
                         current.remove(integersIn: sourceRange)
