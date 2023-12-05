@@ -97,7 +97,8 @@ public struct Day5 {
                 next.removeAll()
             }
 
-            // Result is a number of incongruent ranges from mapping, so lowest range bounds is the lowest location possible
+            // Result is a number of incongruent ranges from mapping, so lowest range bounds
+            // is the lowest location possible
             return current.rangeView.map { $0.lowerBound }.min() ?? 0
         }
     }
