@@ -47,7 +47,7 @@ var dependencies: [Package.Dependency] = [
     .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
     .package(url: "https://github.com/apple/swift-testing", revision: "0b5c648b5329bac107064950fa1b19858d581103"),
 ]
-#if os(macOS) || os(Linux)
+#if os(macOS)
     products.append(.executable(name: "aoc-cli", targets: ["AdventOfCodeCLI"]))
     targets.append(
         .executableTarget(
