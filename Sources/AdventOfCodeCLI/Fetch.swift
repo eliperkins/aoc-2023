@@ -33,7 +33,7 @@ struct Fetch: AsyncParsableCommand {
         let session = URLSession(configuration: .default)
         #if canImport(FoundationNetworking)
         let data = try await withCheckedThrowingContinuation { continuation in
-            let task = session.dataTask(with: url) { data, response, error in
+            let task = session.dataTask(with: url) { data, _, error in
                 if let data {
                     continuation.resume(returning: data)
                 } else if let error {
