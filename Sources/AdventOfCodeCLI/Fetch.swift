@@ -1,5 +1,8 @@
 import ArgumentParser
 import Foundation
+#if os(Linux)
+import FoundationNetworking
+#endif
 
 struct Fetch: AsyncParsableCommand {
     static var configuration: CommandConfiguration = CommandConfiguration(
@@ -28,8 +31,20 @@ struct Fetch: AsyncParsableCommand {
             string: "https://adventofcode.com/\(options.year)/day/\(options.day)/input"
         )!
         let session = URLSession(configuration: .default)
+        #if canImport(FoundationNetworking)
+        let data = try await withCheckedThrowingContinuation { continuation in
+            let task = session.dataTask(with: url) { data, response, error in
+                if let data {
+                    continuation.resume(returning: data)
+                } else if let error {
+                    continuation.resume(throwing: error)
+                }
+            }
+            task.resume()
+        }
+        #else
         let (data, _) = try await session.data(from: url)
-
+        #endif
         guard let input = String(data: data, encoding: .utf8) else {
             throw ValidationError("Could not decode input data.")
         }
