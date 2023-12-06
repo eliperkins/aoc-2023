@@ -52,9 +52,7 @@ public struct Day6 {
 
         return zip(times, distances)
             .map { time, distance in
-                let x = calculateDistances(raceDuration: time, recordDistance: distance)
-                print(x)
-                return x
+                calculateDistances(raceDuration: time, recordDistance: distance)
             }
             .product()
     }
