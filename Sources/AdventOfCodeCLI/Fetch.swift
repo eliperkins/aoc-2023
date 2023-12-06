@@ -1,7 +1,8 @@
 import ArgumentParser
 import Foundation
+
 #if os(Linux)
-import FoundationNetworking
+    import FoundationNetworking
 #endif
 
 struct Fetch: AsyncParsableCommand {
@@ -32,18 +33,18 @@ struct Fetch: AsyncParsableCommand {
         )!
         let session = URLSession(configuration: .default)
         #if canImport(FoundationNetworking)
-        let data = try await withCheckedThrowingContinuation { continuation in
-            let task = session.dataTask(with: url) { data, _, error in
-                if let data {
-                    continuation.resume(returning: data)
-                } else if let error {
-                    continuation.resume(throwing: error)
+            let data = try await withCheckedThrowingContinuation { continuation in
+                let task = session.dataTask(with: url) { data, _, error in
+                    if let data {
+                        continuation.resume(returning: data)
+                    } else if let error {
+                        continuation.resume(throwing: error)
+                    }
                 }
+                task.resume()
             }
-            task.resume()
-        }
         #else
-        let (data, _) = try await session.data(from: url)
+            let (data, _) = try await session.data(from: url)
         #endif
         guard let input = String(data: data, encoding: .utf8) else {
             throw ValidationError("Could not decode input data.")
