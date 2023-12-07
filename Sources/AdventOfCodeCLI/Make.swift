@@ -10,6 +10,8 @@ struct Make: AsyncParsableCommand {
 
     private func sourceFile(_ day: Int) -> String {
         """
+        import AdventOfCodeKit
+
         public struct Day\(options.day) {
             public static let sample = \"\"\"
             \"\"\"
