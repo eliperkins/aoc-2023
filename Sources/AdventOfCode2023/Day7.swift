@@ -114,12 +114,12 @@ public struct Day7 {
         static func calculateRanking(_ cards: [Card], jokersEnabled: Bool) -> Ranking {
             let counts = Dictionary(grouping: cards, by: { $0 }).mapValues(\.count)
             let sortedCounts = counts.sorted { $0.value > $1.value }
-            let sortedCards = sortedCounts.map(\.key)
 
+            let numberOfDifferentValues = sortedCounts.count
             let jokerCount = jokersEnabled ? counts[.joker, default: 0] : 0
-            let firstValue = sortedCounts.first?.value
+            let mostCommonCardCount = sortedCounts.first?.value
 
-            switch (sortedCards.count, firstValue, jokerCount) {
+            switch (numberOfDifferentValues, mostCommonCardCount, jokerCount) {
             case (1, _, _): return .fiveOfAKind
             case (2, 4, 0): return .fourOfAKind
             case (2, 3, 0): return .fullHouse
@@ -131,7 +131,8 @@ public struct Day7 {
             case (3, 2, 2): return .fourOfAKind
             case (3, _, 3): return .fourOfAKind
             case (3, _, _): return .twoPair
-            case (4, _, 1), (4, _, 2): return .threeOfAKind
+            case (4, _, 1): return .threeOfAKind
+            case (4, _, 2): return .threeOfAKind
             case (4, _, _): return .onePair
             case (5, _, 1): return .onePair
             default: return .highCard
