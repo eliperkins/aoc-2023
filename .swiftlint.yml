@@ -29,3 +29,5 @@ identifier_name:
     - ls
     - f
     - to
+cyclomatic_complexity:
+  ignores_case_statements: true
