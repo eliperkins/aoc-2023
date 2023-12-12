@@ -134,53 +134,16 @@ public struct Day10 {
         }
     }
 
-    public func solvePart1() throws -> Int {
-        let map = try Matrix(string: input).map {
-            Pipe(point: Point($1), character: $0)
-        }
-        let start = map.first(where: \.isStartingPoint)!
-        var current = start
-        var previousDirection: Pipe.ConnectionDirection?
-        var loop = Set<Pipe>([])
-        loop.insert(start)
-        walkingLoop: while true {
-            let directions =
-                previousDirection.flatMap({ current.connectionDirections.subtracting([$0]) })
-                ?? current.connectionDirections
-            directionLoop: for direction in directions {
-                let next: Point
-                switch direction {
-                case .north:
-                    next = Point(x: current.point.x, y: current.point.y - 1)
-                case .south:
-                    next = Point(x: current.point.x, y: current.point.y + 1)
-                case .east:
-                    next = Point(x: current.point.x + 1, y: current.point.y)
-                case .west:
-                    next = Point(x: current.point.x - 1, y: current.point.y)
-                }
-
-                if let nextPipe = map.at(point: next), current.connects(to: nextPipe, from: direction) {
-                    if !loop.contains(nextPipe) {
-                        loop.insert(nextPipe)
-                        current = nextPipe
-                        previousDirection = direction.opposite
-                        break directionLoop
-                    } else if nextPipe.isStartingPoint {
-                        break walkingLoop
-                    }
-                }
-            }
-        }
-
-        return loop.count / 2
+    enum ParsingError: Error {
+        case failedToParse
+        case failedToFindStartingPoint
     }
 
-    public func solvePart2() throws -> Int {
-        let map = try Matrix(string: input).map {
-            Pipe(point: Point($1), character: $0)
+    func buildLoop(map: Matrix<Pipe>) throws -> OrderedSet<Pipe> {
+        guard let start = map.first(where: \.isStartingPoint) else {
+            throw ParsingError.failedToFindStartingPoint
         }
-        let start = map.first(where: \.isStartingPoint)!
+
         var current = start
         var previousDirection: Pipe.ConnectionDirection?
         var loop = OrderedSet<Pipe>([])
@@ -214,8 +177,24 @@ public struct Day10 {
                 }
             }
         }
+        return loop
+    }
 
-        let area = zip(loop, loop.dropFirst() + [loop.first!]).reduce(0) { acc, next in
+    public func solvePart1() throws -> Int {
+        let map = try Matrix(string: input).map {
+            Pipe(point: Point($1), character: $0)
+        }
+        let loop = try buildLoop(map: map)
+        return loop.count / 2
+    }
+
+    public func solvePart2() throws -> Int {
+        let map = try Matrix(string: input).map {
+            Pipe(point: Point($1), character: $0)
+        }
+        let loop = try buildLoop(map: map)
+        guard let first = loop.first else { throw ParsingError.failedToFindStartingPoint }
+        let area = zip(loop, loop.dropFirst() + [first]).reduce(0) { acc, next in
             let (lhs, rhs) = next
             return acc + lhs.point.x * rhs.point.y - lhs.point.y * rhs.point.x
         }
