@@ -128,7 +128,7 @@ public struct Matrix<T>: CustomDebugStringConvertible {
 
 extension Matrix {
     public var debugDescription: String {
-        rows.debugDescription
+        rows.map { $0.debugDescription }.joined(separator: "\n")
     }
 }
 
@@ -139,7 +139,7 @@ extension Matrix where T == String {
 }
 
 extension Matrix where T == Character {
-    init(
+    public init(
         string: String
     ) throws {
         self.init(string.lines.map(Array.init))
