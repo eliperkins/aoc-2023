@@ -30,7 +30,7 @@ public struct Day11 {
     }
 
     func expanding(by size: Int) throws -> Matrix<Character> {
-        let map = try Matrix(string: input)
+        let map = Matrix(string: input)
         let blankRows = map.rows
             .enumerated()
             .filter({ $0.element.allSatisfy { $0 == "." } })
@@ -64,7 +64,7 @@ public struct Day11 {
     }
 
     public func sumOfShortestLengths(expandingBy multiplier: Int) throws -> Int {
-        let map = try Matrix(string: input)
+        let map = Matrix(string: input)
         let blankRows = map.rows
             .enumerated()
             .filter({ $0.element.allSatisfy { $0 == "." } })

@@ -139,9 +139,7 @@ extension Matrix where T == String {
 }
 
 extension Matrix where T == Character {
-    public init(
-        string: String
-    ) throws {
+    public init(string: String) {
         self.init(string.lines.map(Array.init))
     }
 

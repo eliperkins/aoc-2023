@@ -181,7 +181,7 @@ public struct Day10 {
     }
 
     public func solvePart1() throws -> Int {
-        let map = try Matrix(string: input).map {
+        let map = Matrix(string: input).map {
             Pipe(point: Point($1), character: $0)
         }
         let loop = try buildLoop(map: map)
@@ -189,7 +189,7 @@ public struct Day10 {
     }
 
     public func solvePart2() throws -> Int {
-        let map = try Matrix(string: input).map {
+        let map = Matrix(string: input).map {
             Pipe(point: Point($1), character: $0)
         }
         let loop = try buildLoop(map: map)
